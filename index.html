@@ -62,6 +62,12 @@
             filter: invert(100%) hue-rotate(180deg) brightness(1.5); /* Makes player match dark theme */
         }
     </style>
+    .song-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
 </head>
 <body>
 
@@ -104,19 +110,21 @@ const mySongs = [
 
         const playlistDiv = document.getElementById('playlist');
 
-        // Function to display songs
+// Function to display songs with a Download Button
         function displaySongs(songsToShow) {
-            playlistDiv.innerHTML = ''; // Clear current list
+            playlistDiv.innerHTML = ''; 
             
             songsToShow.forEach(song => {
                 const card = document.createElement('div');
                 card.className = 'song-card';
                 
-                // Cleans up the filename for display (removes .mp3 and underscores)
                 const displayName = song.replace('.mp3', '').replace(/_/g, ' ');
 
                 card.innerHTML = `
-                    <div class="song-name">${displayName}</div>
+                    <div class="song-info">
+                        <div class="song-name">${displayName}</div>
+                        <a href="${song}" download="${song}" style="color: #1DB954; font-size: 12px; text-decoration: none;">Download</a>
+                    </div>
                     <audio controls preload="none">
                         <source src="${song}" type="audio/mpeg">
                     </audio>
