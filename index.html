@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Vault</title>
+    <style>
+        /* Dark Mode Styling */
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: #121212; 
+            color: #ffffff; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        h1 { color: #1DB954; margin-bottom: 20px; }
+        
+        /* Search Bar */
+        #searchBar {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            background: #282828;
+            color: white;
+            font-size: 16px;
+        }
+
+        /* Song List Container */
+        #playlist {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Individual Song Row */
+        .song-card {
+            background: #181818;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #222;
+        }
+
+        .song-name {
+            font-weight: bold;
+            font-size: 14px;
+            flex: 1;
+            margin-right: 10px;
+            text-transform: capitalize;
+        }
+
+        audio {
+            height: 30px;
+            filter: invert(100%) hue-rotate(180deg) brightness(1.5); /* Makes player match dark theme */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Music Library</h1>
+    
+    <input type="text" id="searchBar" placeholder="Search your songs..." onkeyup="searchSongs()">
+
+    <div id="playlist">
+        </div>
+
+    <script>
+        // --- MANUAL INPUT: ADD YOUR 30 FILENAMES HERE ---
+        // Make sure the names match your uploaded files exactly!
+        const mySongs = [
+            "song1.mp3",
+            "chill_beat.mp3",
+            "vibe_check.mp3",
+            "track_04.mp3",
+            "project_audio.mp3"
+            // Keep adding your 30 names here with quotes and commas...
+        ];
+
+        const playlistDiv = document.getElementById('playlist');
+
+        // Function to display songs
+        function displaySongs(songsToShow) {
+            playlistDiv.innerHTML = ''; // Clear current list
+            
+            songsToShow.forEach(song => {
+                const card = document.createElement('div');
+                card.className = 'song-card';
+                
+                // Cleans up the filename for display (removes .mp3 and underscores)
+                const displayName = song.replace('.mp3', '').replace(/_/g, ' ');
+
+                card.innerHTML = `
+                    <div class="song-name">${displayName}</div>
+                    <audio controls preload="none">
+                        <source src="${song}" type="audio/mpeg">
+                    </audio>
+                `;
+                playlistDiv.appendChild(card);
+            });
+        }
+
+        // Search Logic
+        function searchSongs() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const filteredSongs = mySongs.filter(song => 
+                song.toLowerCase().includes(query)
+            );
+            displaySongs(filteredSongs);
+        }
+
+        // Initial load of all songs
+        displaySongs(mySongs);
+    </script>
+
+</body>
+</html>
